@@ -15,13 +15,18 @@ const ResultPage = () => {
   ];
 
   const pdfRef = useRef<HTMLDivElement>(null);
+  const mandalartRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPDF = async () => {
-    if (!pdfRef.current) return;
+    if (!pdfRef.current || !mandalartRef.current) return;
 
+    // 만다라트 보이도록 설정
+    mandalartRef.current.style.display = 'flex';
+
+    // 캡처할 요소
     const element = pdfRef.current;
 
-    // 임시 div를 만들어 lg 화면 기준으로 조정
+    // 임시 div 생성
     const clonedElement = element.cloneNode(true) as HTMLElement;
     clonedElement.style.width = '1024px';
     clonedElement.style.position = 'absolute';
@@ -33,6 +38,9 @@ const ResultPage = () => {
       scale: 2,
       backgroundColor: null,
     });
+
+    // 캡처 후 만다라트 다시 숨김
+    mandalartRef.current.style.display = 'none';
 
     // 캔버스 크기 조정
     document.body.removeChild(clonedElement);
@@ -48,7 +56,6 @@ const ResultPage = () => {
 
   return (
     <Layout>
-      {/* PDF 다운로드 버튼 (우측 상단) */}
       <div className='flex items-center w-full justify-end my-2'>
         <Button
           onClick={handleDownloadPDF}
@@ -65,10 +72,10 @@ const ResultPage = () => {
       >
         <div className='min-h-screen bg-white rounded-t-lg'>
           <div className='grid grid-cols-2 max-sm:grid-cols-1 max-sm:flex max-sm:flex-col-reverse gap-4 text-base md:text-xl rounded-t-lg p-5'>
-            {/* 학습 과목 추천 */}
+            {/* 추천 학습 과목 */}
             <div className='flex flex-col gap-2 bg-yellow rounded p-8'>
               <h3 className='text-base md:text-xl text-four font-semibold'>
-                학습 과목 추천
+                추천 학습 과목
               </h3>
               <div className='flex flex-col'>
                 {mockData.priorities.map((subject: string) => (
@@ -119,6 +126,42 @@ const ResultPage = () => {
                   {mockData.explain}
                 </span>
               </div>
+            </div>
+          </div>
+
+          {/* 만다라트 (캡처할 때만 보이도록 설정) */}
+          <div
+            ref={mandalartRef}
+            className='p-8 flex flex-col items-center gap-4'
+            // style={{ display: 'none' }}
+          >
+            <h3 className='text-base md:text-xl text-four font-semibold text-center'>
+              나의 학습 만다라트 작성
+            </h3>
+
+            <div className='grid grid-cols-3 gap-2 mt-4 p-4 border bg-white'>
+              {Array.from({ length: 9 }).map((_, rowIndex) => (
+                <div key={rowIndex} className='grid grid-cols-3 gap-1'>
+                  {Array.from({ length: 9 }).map((_, colIndex) => {
+                    const isFifthRow = rowIndex === 4;
+                    const isOuterCenter = rowIndex !== 4 && colIndex === 4;
+
+                    return (
+                      <div
+                        key={colIndex}
+                        className={`p-6 text-center font-bold text-lg 
+                          ${
+                            isFifthRow
+                              ? 'bg-gray-400'
+                              : isOuterCenter
+                              ? 'bg-gray-300'
+                              : 'bg-gray-200/70'
+                          }`}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           </div>
         </div>

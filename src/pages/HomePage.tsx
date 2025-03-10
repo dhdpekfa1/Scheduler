@@ -37,7 +37,7 @@ const HomePage = () => {
     toast({
       title: '작성하신 정보를 바탕으로 분석을 시작합니다.',
       description: (
-        <pre className='mt-2 w-[340px] rounded-t-md bg-blue p-4'>
+        <pre className='mt-2 w-[340px] rounded-t-lg bg-blue p-4'>
           <code className='text-'>
             최종 목표: {data.goal}
             {data.description && `\n설명: ${data.description}`}
@@ -81,10 +81,10 @@ const HomePage = () => {
                 />
               </div>
 
-              <div className='bg-four rounded-t-xl p-6 flex flex-col gap-8'>
+              <div className='bg-white rounded-t-xl p-6 flex flex-col gap-8 h-full'>
                 {/* 동적 과목 필드 */}
                 <div className='flex flex-col gap-2'>
-                  <FormLabel className='text-sm md:text-xl text-ef'>
+                  <FormLabel className='text-sm md:text-xl text-two'>
                     학습 중인 과목
                   </FormLabel>
                   {fields.map((field, index) => (
@@ -108,7 +108,7 @@ const HomePage = () => {
                       {fields.length > 1 && (
                         <Button
                           type='button'
-                          className='bg-red-500/40 hover:bg-red-400 h-full text-xs md:text-base'
+                          className='bg-red-500/80 hover:bg-red-500 px-2 py-1 h-fit text-xs md:text-base mt-1 md:mt-0.5'
                           onClick={() => remove(index)}
                         >
                           삭제
@@ -119,8 +119,9 @@ const HomePage = () => {
                   <div className='w-full flex items-center justify-center'>
                     <Button
                       type='button'
+                      variant='secondary'
                       onClick={() => append({ value: '' })}
-                      className='h-fit py-1 px-2 md:px-3 text-xs md:text-sm text-four bg-blue hover:bg-green hover:text-four m-2'
+                      className='h-fit p-2 md:px-3 text-xs md:text-sm m-2'
                     >
                       과목 추가
                     </Button>
@@ -133,7 +134,7 @@ const HomePage = () => {
                   name='description'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className='text-sm md:text-xl text-ef'>
+                      <FormLabel className='text-sm md:text-xl text-two'>
                         추가 설명{' '}
                         <span className='text-neutral-400'>[선택]</span>
                       </FormLabel>
@@ -151,9 +152,10 @@ const HomePage = () => {
                 />
               </div>
 
-              <div className='flex items-center justify-center bg-four pb-6'>
+              <div className='flex items-center justify-center bg-white pb-6'>
                 <Button
-                  className='bg-blue hover:bg-green w-2/3 md:w-1/2 lg:w-1/3 text-sm md:text-base text-four'
+                  className='w-2/3 md:w-1/2 lg:w-1/3 text-sm md:text-base'
+                  // className='bg-blue hover:bg-green w-2/3 md:w-1/2 lg:w-1/3 text-sm md:text-base text-four'
                   type='submit'
                 >
                   제출
